@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+
+    >
+
+    <ImageView
+        android:id="@+id/messageIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:src="@drawable/link2"
+        android:contentDescription="content_desc_message_icon"
+        android:layout_alignBottom="@+id/subject_gadwal"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+
+
+
+    <TextView
+        android:id="@+id/Doctor_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/messageIcon"
+        android:layout_alignParentLeft="true"
+        android:text="Very important !!"
+        android:paddingTop="@dimen/message_vertical_padding"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:textSize="20sp"
+        android:textColor="@color/apptheme_color"
+        />
+
+
+
+    <TextView
+        android:id="@+id/subject_gadwal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/Doctor_name"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingBottom="@dimen/message_vertical_padding"
+        android:text="elgayar "
+        android:textSize="12sp"
+        android:layout_marginTop="10dp"
+        android:textColor="@android:color/background_dark"
+
+
+        />
+
+    <TextView
+        android:id="@+id/Description25"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="There will be a quiz next\n lecture"
+        android:textSize="12sp"
+        android:textColor="#272727"
+        android:layout_below="@+id/subject_gadwal"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="   Large Text"
+        android:id="@+id/time"
+        android:layout_alignBaseline="@+id/subject_gadwal"
+        android:layout_toRightOf="@+id/subject_gadwal"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Small Text"
+        android:id="@+id/link"
+        android:layout_below="@+id/Description25"
+        />
+
+
+</RelativeLayout>
