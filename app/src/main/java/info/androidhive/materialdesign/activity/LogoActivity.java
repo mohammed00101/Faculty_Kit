@@ -18,15 +18,20 @@ public class LogoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_logo);
         final SharedPreferences shared=getSharedPreferences("users",MODE_PRIVATE);
+
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             public void run() {
                 finish();
                 if(!(shared.getString("username","default").equals("default"))&&!(shared.getString("password","default").equals("default"))){
                     intent = new Intent(getBaseContext(),ScheduleActivity.class);
-                    Toast.makeText(getBaseContext(),"hj",Toast.LENGTH_LONG).show();
 
-                }else{
+                }
+                else if(!(shared.getString("Name","default").equals("default"))){
+                    intent = new Intent(getBaseContext(),StudentTabs.class);
+
+                }
+                else{
                      intent = new Intent(LogoActivity.this, HomeActivity.class);
                }
                 startActivity(intent);

@@ -23,13 +23,14 @@ import java.util.Map;
 
 import info.androidhive.materialdesign.R;
 import info.androidhive.materialdesign.adapter.DoctorAdapter;
+import info.androidhive.materialdesign.model.NonScrollListView;
 
 /**
  * Created by Abed Eid on 03/05/2016.
  */
 public class Doctors extends Fragment {
     Firebase firebase;
-    ListView list;
+    NonScrollListView list;
     List<String> dlist;
     String d;
     DoctorAdapter doctorAdapter;
@@ -40,7 +41,7 @@ public class Doctors extends Fragment {
         myDialog = ProgressDialog.show(getActivity(), "Please wait ...", "Loading ...", true);
         super.onCreate(savedInstanceState);
         firebase.setAndroidContext(getActivity());
-        firebase = new Firebase("https://torrid-torch-3608.firebaseio.com/users");
+        firebase = new Firebase("https://fci-kit.firebaseio.com/users");
         dlist = new ArrayList<String>();
         txt = new ArrayList<>();
 
@@ -52,7 +53,7 @@ public class Doctors extends Fragment {
                              Bundle savedInstanceState) {
         final View b = inflater.inflate(R.layout.fragment_docotrs, container, false);
 
-        list = (ListView) b.findViewById(R.id.list2);
+        list = (NonScrollListView) b.findViewById(R.id.list_doctors);
         Firebase doctor = firebase.child("");
         ChildEventListener childEventListener = doctor.addChildEventListener(new ChildEventListener() {
 

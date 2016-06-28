@@ -21,8 +21,8 @@ public class ActivityDetails extends AppCompatActivity implements FragmentDetail
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
 
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar_details);
-        setSupportActionBar(myToolbar);
+       Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar_details);
+       setSupportActionBar(myToolbar);
 
         Intent intent = getIntent();
         Bundle bundle = intent.getBundleExtra(Schedule.assistant_key);

@@ -25,6 +25,7 @@ import java.util.Map;
 
 import info.androidhive.materialdesign.R;
 import info.androidhive.materialdesign.adapter.NotificationAdapter;
+import info.androidhive.materialdesign.model.NonScrollListView;
 
 /**
  * Created by Abed Eid on 01/05/2016.
@@ -34,7 +35,7 @@ public class NotificationStud extends Fragment implements AdapterView.OnItemSele
     Firebase firebase;
     //    Notify data;
     //    List<Notify> notifies;
-    ListView list;
+   NonScrollListView list;
     NotificationAdapter notificationAdapter;
     public static final String DEFAULT = "default";
     List<String> txt;
@@ -46,12 +47,12 @@ public class NotificationStud extends Fragment implements AdapterView.OnItemSele
     public void onCreate(Bundle savedInstanceState) {
         myDialog = ProgressDialog.show(getActivity(), "Please wait ...", "Loading ...", true);
         super.onCreate(savedInstanceState);
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("Data", Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("users", Context.MODE_PRIVATE);
         Group = sharedPreferences.getString("Group", DEFAULT);
         Section = sharedPreferences.getString("Section", DEFAULT);
         Year = sharedPreferences.getString("Year", DEFAULT);
         firebase.setAndroidContext(getActivity());
-        firebase = new Firebase("https://torrid-torch-3608.firebaseio.com/notification");
+        firebase = new Firebase("https://fci-kit.firebaseio.com/notification");
 //        data = new Notify();             ////////////////////////////////////////
         dlist = new ArrayList<String>();
         txt = new ArrayList<>();
@@ -65,7 +66,7 @@ public class NotificationStud extends Fragment implements AdapterView.OnItemSele
         final View b = inflater.inflate(R.layout.fragment_notificationstud, container, false);
 
         // list = (ListView) getActivity().findViewById(R.id.list1);
-        list = (ListView) b.findViewById(R.id.list1);
+        list = (NonScrollListView) b.findViewById(R.id.listNostud);
         Firebase notification = firebase.child("");
         ChildEventListener childEventListener = notification.addChildEventListener(new ChildEventListener() {
             @Override

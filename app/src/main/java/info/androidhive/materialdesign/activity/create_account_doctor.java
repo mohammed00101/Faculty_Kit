@@ -29,11 +29,13 @@ import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import info.androidhive.materialdesign.R;
+import info.androidhive.materialdesign.adapter.MySpinnerAdapter;
 
 public class create_account_doctor extends AppCompatActivity {
     Button camera;
@@ -44,7 +46,7 @@ public class create_account_doctor extends AppCompatActivity {
     EditText username, password, email;
     Spinner spinner;
     List<String> spinnerData, userDoctorDataNames;
-    ArrayAdapter adapter;
+    MySpinnerAdapter adapter;
     String doctorName;
     Firebase firebase;
     private static final int CAMERA_REQUEST = 1;
@@ -64,7 +66,7 @@ public class create_account_doctor extends AppCompatActivity {
         spinnerData = new ArrayList<>();
         userDoctorDataNames = new ArrayList<>();
         Firebase.setAndroidContext(this);
-        firebase = new Firebase("https://torrid-torch-3608.firebaseio.com/");
+        firebase = new Firebase("https://fci-kit.firebaseio.com");
         userDoctorName();
         child = null;
         if (DoctorOrAssistant.isDoctor(this)) {
@@ -97,20 +99,22 @@ public class create_account_doctor extends AppCompatActivity {
 
                 userDoctorName();
                 removeDuplicated();
-                adapter = new ArrayAdapter(getBaseContext(), android.R.layout.simple_spinner_dropdown_item, spinnerData);
+
+                adapter = new MySpinnerAdapter(getBaseContext(), spinnerData, "choose your name");
                 spinner.setAdapter(adapter);
 
-                spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        doctorName = ((TextView) view).getText().toString();
-                    }
-
-                    @Override
-                    public void onNothingSelected(AdapterView<?> parent) {
-
-                    }
-                });
+//                spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//                    @Override
+//                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                        doctorName =((TextView) view.findViewById(R.id.spinner_textView_item)).getText().toString();
+//
+//                    }
+//
+//                    @Override
+//                    public void onNothingSelected(AdapterView<?> parent) {
+//
+//                    }
+//                });
 
             }
 
@@ -200,7 +204,8 @@ public class create_account_doctor extends AppCompatActivity {
     }
 
     public void createUser() {
-        if (username.getText().toString().equals("") || password.getText().toString().equals("")) {
+
+        if (username.getText().toString().equals("") || password.getText().toString().equals("") || spinner.getSelectedItem() == null) {
             AlertDialog.Builder build = new AlertDialog.Builder(create_account_doctor.this);
             build.setTitle("Fail");
             build.setMessage("UserName and Password can't be Empty");
@@ -214,6 +219,7 @@ public class create_account_doctor extends AppCompatActivity {
             dialog.show();
 
         } else {
+            doctorName = spinner.getSelectedItem().toString();
             String type = null;
             if(DoctorOrAssistant.isAssistant(this)){
                 type = "assistant";

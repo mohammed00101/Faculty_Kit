@@ -51,7 +51,7 @@ public class ScheduleActivityFragment extends Fragment {
 
     private SharedPreferences sharedPreference;
     private SharedPreferences sharedPreferenceUsers;
-    private SharedPreferences sharedPreferencesStud;
+   // private SharedPreferences sharedPreferencesStud;
 
     // ImageView listBackground;
 
@@ -64,15 +64,17 @@ public class ScheduleActivityFragment extends Fragment {
     public void init(View view) {
 
 
-        ref = new Firebase("https://torrid-torch-3608.firebaseio.com");
+        ref = new Firebase("https://fci-kit.firebaseio.com");
 
         allschedule = new ArrayList<>();
         todayschedule = new ArrayList<>();
         listView = (NonScrollListView) view.findViewById(R.id.listView);
-        sharedPreference = getActivity().getSharedPreferences("Date", Context.MODE_PRIVATE);
+        sharedPreference = getActivity().getSharedPreferences("date", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreference.edit();
         editor.putString("chosenDay", (String) DateFormat.format("EEEE", new Date()));
         editor.commit();
+        sharedPreferenceUsers = getActivity().getSharedPreferences("users", Context.MODE_PRIVATE);
+
 
 
     }
@@ -99,33 +101,21 @@ public class ScheduleActivityFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                Intent intent = new Intent(getActivity(), ActivityDetails.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable(Schedule.assistant_key, todayschedule.get(position));
-                intent.putExtra(Schedule.assistant_key, bundle);
-                startActivity(intent);
+                if (DoctorOrAssistant.isAssistant(getActivity()) || DoctorOrAssistant.isDoctor(getActivity())) {
+                    Intent intent = new Intent(getActivity(), ActivityDetails.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable(Schedule.assistant_key, todayschedule.get(position));
+                    intent.putExtra(Schedule.assistant_key, bundle);
+                    startActivity(intent);
+                }
                 // intent
 
             }
         });
 
 
-        if (DateFormat.format("EEEE", new Date()).equals(sharedPreference.getString("chosenDay", ""))) {
-            getActivity().setTitle("Today");
-            if (taskListAdapter != null) {
-                handler = new Handler();
-                handler.postDelayed(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        taskListAdapter.notifyDataSetChanged();
-                        handler.postDelayed(this, 60 * 1000);
-                    }
-                }, 60 * 1000);
 
 
-            }
-        }
 
 
         return view;
@@ -142,8 +132,25 @@ public class ScheduleActivityFragment extends Fragment {
         updateList();
 
         // Refresh title
-        if (!DateFormat.format("EEEE", new Date()).equals(sharedPreference.getString("chosenDay", "")))
+        if (!DateFormat.format("EEEE", new Date()).toString().toLowerCase().equals(sharedPreference.getString("chosenDay", "").toLowerCase()))
             getActivity().setTitle(sharedPreference.getString("chosenDay", ""));
+        else{
+            getActivity().setTitle("Today");
+            if (taskListAdapter != null) {
+                handler = new Handler();
+                handler.postDelayed(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        taskListAdapter.notifyDataSetChanged();
+                        handler.postDelayed(this, 60 * 1000);
+                    }
+                }, 60 * 1000);
+
+
+            }
+
+        }
 
     }
 
@@ -166,9 +173,9 @@ public class ScheduleActivityFragment extends Fragment {
                                 allschedule.add(schedule);
 
                             } else {
-                                if ((schedule.getSection().equals(sharedPreferencesStud.getString("Section", "default")) ||
+                                if ((schedule.getSection().equals(sharedPreferenceUsers.getString("Section", "default")) ||
                                         schedule.getSection().equals(""))
-                                        && schedule.getGroup().equals(sharedPreferencesStud.getString("Group", "default")))
+                                        && schedule.getGroup().equals(sharedPreferenceUsers.getString("Group", "default")))
                                     allschedule.add(schedule);
 
 
@@ -226,15 +233,15 @@ public class ScheduleActivityFragment extends Fragment {
 
     public void choosenType() {
 
-        sharedPreferenceUsers = getActivity().getSharedPreferences("users", Context.MODE_PRIVATE);
 
 
         if (DoctorOrAssistant.isAssistant(getActivity())) {
 
 
-            getData("schedule_assistant", "doctor", sharedPreferenceUsers.getString("name", "default"));
+            getData("assistant", "name", sharedPreferenceUsers.getString("name", "default"));
 
         } else if (DoctorOrAssistant.isDoctor(getActivity())) {
+
 
 
             getData("schedule_doctor", "doctor", sharedPreferenceUsers.getString("name", "default"));
@@ -243,10 +250,11 @@ public class ScheduleActivityFragment extends Fragment {
         } else {
 
 
-            sharedPreferencesStud = getActivity().getSharedPreferences("Data", Context.MODE_PRIVATE);
 
-            getData("schedule_assistant", "year", sharedPreferencesStud.getString("Year", "default"));
-            getData("schedule_doctor", "year", sharedPreferencesStud.getString("Year", "default"));
+            //   sharedPreferencesStud = getActivity().getSharedPreferences("student", Context.MODE_PRIVATE);
+
+            getData("assistant", "year", sharedPreferenceUsers.getString("Year", "default"));
+            getData("schedule_doctor", "year", sharedPreferenceUsers.getString("Year", "default"));
 
         }
 
@@ -280,14 +288,16 @@ public class ScheduleActivityFragment extends Fragment {
 
 
         } else if (id == R.id.log_out) {
-            SharedPreferences sharePrefernces = getActivity().getSharedPreferences("users", Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharePrefernces.edit();
-            editor.clear();
-            editor.commit();
-            getActivity().finish();
-            startActivity(new Intent(getActivity(), LogoActivity.class));
 
-        }
+                SharedPreferences sharePrefernces = getActivity().getSharedPreferences("users", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharePrefernces.edit();
+                editor.clear();
+                editor.commit();
+                getActivity().finish();
+                startActivity(new Intent(getActivity(), LogoActivity.class));
+            }
+
+
 
         return true;
     }

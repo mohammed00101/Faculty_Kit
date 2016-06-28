@@ -48,16 +48,18 @@ public class StudentTabs extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager);
 
 
-
+        tabLayout.getTabAt(0).setIcon(R.drawable.ic_action_home);
+        tabLayout.getTabAt(1).setIcon(R.drawable.ic_not);
+        tabLayout.getTabAt(2).setIcon(R.drawable.ic_action_personal);
 
 
     }
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new ScheduleActivityFragment() , "Schedual");
-        adapter.addFragment(new NotificationStud(), "Notification");
-        adapter.addFragment(new Doctors(), "Doctors");
+        adapter.addFragment(new ScheduleActivityFragment(),null);
+        adapter.addFragment(new NotificationStud(),null);
+        adapter.addFragment(new Doctors(),null);
 
         viewPager.setAdapter(adapter);
     }
@@ -67,7 +69,7 @@ public class StudentTabs extends AppCompatActivity {
 
     public void created(View view) {
 
-        SharedPreferences sharedPreferences = getSharedPreferences("Data", Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences("users", Context.MODE_PRIVATE);
         Name = sharedPreferences.getString("Name", DEFAULT);
         Phone = sharedPreferences.getString("Phone", DEFAULT);
         Group = sharedPreferences.getString("Group", DEFAULT);
@@ -96,7 +98,7 @@ public class StudentTabs extends AppCompatActivity {
         if (id == R.id.Account) {
             //check name phone
 
-            SharedPreferences sharedPreferences = getSharedPreferences("Data", MODE_PRIVATE);
+            SharedPreferences sharedPreferences = getSharedPreferences("users", MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putString("Name", DEFAULT);
             editor.putString("Phone", DEFAULT);
@@ -152,7 +154,11 @@ public class StudentTabs extends AppCompatActivity {
 
             return mFragmentTitleList.get(position);
         }
+
+
     }
+
+
 
 
 }

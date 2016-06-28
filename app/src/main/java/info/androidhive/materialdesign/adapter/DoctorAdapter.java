@@ -52,7 +52,7 @@ public class DoctorAdapter extends BaseAdapter  {
         if (convertView == null)
             convertView = inflater.inflate(R.layout.doctor_item, parent, false);
         TextView username = (TextView) convertView.findViewById(R.id.Doctor_name);
-        TextView email = (TextView) convertView.findViewById(R.id.subject_gadwal);
+        TextView email = (TextView) convertView.findViewById(R.id.doctor_email);
         m = Items.get(position);
         String[] parts = (m.split("username"));
         username.setText(parts[0]);

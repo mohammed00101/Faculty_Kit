@@ -43,7 +43,7 @@ public class ProfessorFragment extends AppCompatActivity {
         //View rootView = inflater.inflate(R.layout.fragment_professor, container, false);
         setContentView(R.layout.fragment_professor);
         Firebase.setAndroidContext(this);
-        final Firebase firebase = new Firebase("https://torrid-torch-3608.firebaseio.com/");
+        final Firebase firebase = new Firebase("https://fci-kit.firebaseio.com/");
         final EditText password = (EditText) findViewById(R.id.verifyDoctorpassword);
         AuthicatCode = (Button) findViewById(R.id.loginButton);
 
@@ -73,7 +73,6 @@ public class ProfessorFragment extends AppCompatActivity {
                         if (password.getText().toString().equals(dataSnapshot.getValue(String.class))) {
                             Intent intent = new Intent(ProfessorFragment.this, create_account_doctor.class);
                             startActivity(intent);
-                            finish();
 
                         } else {
                             AlertDialog.Builder build = new AlertDialog.Builder(ProfessorFragment.this);

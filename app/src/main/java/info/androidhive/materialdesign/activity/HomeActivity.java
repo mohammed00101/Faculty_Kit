@@ -28,9 +28,10 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer.Fr
         setContentView(R.layout.activity_home);
         sharedPreferences = getSharedPreferences("checkType",MODE_PRIVATE);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        getSupportActionBar().setTitle(getString(R.string.app_name));
 
         drawerFragment = (FragmentDrawer)
                 getSupportFragmentManager().findFragmentById(R.id.fragment_navigation_drawer);

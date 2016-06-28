@@ -5,7 +5,7 @@ package info.androidhive.materialdesign.activity;
  */
 public class AssistantData {
 
-    private String begin, day, end, group, hall, name, section, subject, year;
+    private String begin, day, end, group,place, name, section, subject, year;
 
     //String type;
     public AssistantData() {
@@ -18,7 +18,7 @@ public class AssistantData {
         this.name = name;
         this.end = end;
         this.group = group;
-        this.hall = hall;
+        this.place = hall;
         this.subject = subject;
         this.year = year;
         this.section = section;
@@ -53,8 +53,8 @@ public class AssistantData {
         return group;
     }
 
-    public String getHall() {
-        return hall;
+    public String getPlace() {
+        return place;
     }
 
     public String getSection() {

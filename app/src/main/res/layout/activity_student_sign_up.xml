@@ -99,16 +99,17 @@
         android:contentDescription="@string/content_desc_button_divider"/>
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/creatStudent"
         style="@style/AuthButton"
         android:text="Create "
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/editTextLayout"
         android:layout_toLeftOf="@id/buttonDivider"
-        android:layout_marginRight="0dp" />
+        android:layout_marginRight="0dp"
+        android:onClick="go" />
 
     <Button
-        android:id="@+id/cancelButton"
+        android:id="@+id/cancelStud"
         style="@style/AuthButton"
         android:text="CANCEL"
         android:layout_alignParentRight="true"

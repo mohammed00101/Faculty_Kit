@@ -13,7 +13,7 @@
     <TextView
         android:id="@+id/title"
         style="@style/AuthTitle"
-        android:text="prefessor" />
+        android:text="professor" />
 
     <TextView
         android:id="@+id/subtitle"

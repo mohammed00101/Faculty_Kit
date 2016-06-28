@@ -10,6 +10,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -24,7 +26,7 @@ import info.androidhive.materialdesign.model.Schedule;
 public class TaskListAdapter extends BaseAdapter {
 
     private Context context;
-    private ArrayList<Schedule> schedual_assistant;
+    private ArrayList<Schedule> schedual;
     private static LayoutInflater inflater=null;
     private long currenttime;
     private SharedPreferences sharedPreference;
@@ -39,18 +41,19 @@ public class TaskListAdapter extends BaseAdapter {
     private TextView textViewTupe;
     private Date date;
     private TextView textViewDoctor;
+    private ImageView imageGo;
 
 
 
-    public TaskListAdapter(Context context, ArrayList<Schedule> schedule_assistant) {
+    public TaskListAdapter(Context context, ArrayList<Schedule> schedule) {
         this.context = context;
-        this.schedual_assistant=schedule_assistant;
+        this.schedual =schedule;
         inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
     }
 
     public int getCount() {
-        return schedual_assistant.size();
+        return schedual.size();
     }
 
     public Object getItem(int position) {
@@ -113,7 +116,7 @@ public class TaskListAdapter extends BaseAdapter {
         currenttime =(date.getHours()*60)+(date.getMinutes());
 
 
-        sharedPreference = context.getSharedPreferences("Date", Context.MODE_PRIVATE);
+        sharedPreference = context.getSharedPreferences("date", Context.MODE_PRIVATE);
 
 
 
@@ -127,6 +130,7 @@ public class TaskListAdapter extends BaseAdapter {
         textViewTimer  =   (TextView)vi.findViewById(R.id.textViewtimer);
         textViewTupe   =   (TextView)vi.findViewById(R.id.textViewType);
         textViewDoctor =   (TextView)vi.findViewById(R.id.textViewDoctor);
+        imageGo        =   (ImageView)vi.findViewById(R.id.list_image_go);
 
     }
 
@@ -134,11 +138,12 @@ public class TaskListAdapter extends BaseAdapter {
 
     public void fillViews(int position) {
 
-        sec_num.setText(schedual_assistant.get(position).getSection());
-        subject.setText(schedual_assistant.get(position).getSubject());
-        year.setText(Integer.toString(schedual_assistant.get(position).getYear()));
-        group.setText( schedual_assistant.get(position).getGroup());
-        place.setText(schedual_assistant.get(position).getPlace());
+        if(!schedual.get(position).getSection().equals(""))
+        sec_num.setText("Sec"+schedual.get(position).getSection());
+        subject.setText(schedual.get(position).getSubject());
+        year.setText(Integer.toString(schedual.get(position).getYear()));
+        group.setText( schedual.get(position).getGroup());
+        place.setText(schedual.get(position).getPlace());
 
 
         isStudent(position);
@@ -149,34 +154,35 @@ public class TaskListAdapter extends BaseAdapter {
 
 
     public  void  isStudent(int position) {
-         if(!DoctorOrAssistant.isAssistant(context) && !DoctorOrAssistant.isDoctor(context))
-       {
 
-           if(schedual_assistant.get(position).getSection().equals(""))
-               textViewTupe.setText("lecture");
-           else textViewTupe.setText("Section");
+            if (!DoctorOrAssistant.isAssistant(context) && !DoctorOrAssistant.isDoctor(context)) {
+
+                if (schedual.get(position).getSection().equals(""))
+                    textViewTupe.setText("lecture");
+                else textViewTupe.setText("Section");
 
 
-             textViewDoctor.setText(schedual_assistant.get(position).getDoctor());
+                textViewDoctor.setText(schedual.get(position).getDoctor());
+
+                Glide.with(context).load(R.drawable.ac).into(imageGo);
+
+            }
 
 
         }
 
 
 
-    }
-
-
     public void setBeginTimeViewInFormet(int position){
 
 
         String timeForm;
-        if(getTimeMin(schedual_assistant.get(position).getBegin())  > 12*60) {
+        if(getTimeMin(schedual.get(position).getBegin())  > 12*60) {
 
-            timeForm = timeFormate(getTimeMin(schedual_assistant.get(position).getBegin()))+"PM";
+            timeForm = timeFormate(getTimeMin(schedual.get(position).getBegin()))+"PM";
         }else
         {
-            timeForm = timeFormate(getTimeMin(schedual_assistant.get(position).getBegin()))+"AM";
+            timeForm = timeFormate(getTimeMin(schedual.get(position).getBegin()))+"AM";
         }
 
         begin.setText(timeForm);
@@ -189,8 +195,9 @@ public class TaskListAdapter extends BaseAdapter {
 
         //past Subjects
 
-        if(getTimeMin(schedual_assistant.get(position).getEnd()) <= currenttime &&
-                DateFormat.format("EEEE", date).equals(sharedPreference.getString("chosenDay",""))) {
+
+        if(getTimeMin(schedual.get(position).getEnd()) <= currenttime &&
+                DateFormat.format("EEEE", date).toString().toLowerCase().equals(sharedPreference.getString("chosenDay", "").toLowerCase())) {
             list_img.setImageResource(R.drawable.radiobutto_next);
 
             textViewTimer.setText("");
@@ -199,11 +206,11 @@ public class TaskListAdapter extends BaseAdapter {
 
         //now Subject
 
-        else if(getTimeMin(schedual_assistant.get(position).getBegin()) <= currenttime &&
-                DateFormat.format("EEEE", date).equals(sharedPreference.getString("chosenDay",""))) {
+        else if(getTimeMin(schedual.get(position).getBegin()) <= currenttime &&
+                DateFormat.format("EEEE", date).toString().toLowerCase().equals(sharedPreference.getString("chosenDay", "").toLowerCase())) {
 
             list_img.setImageResource(R.drawable.radiobutton_now);
-            textViewTimer.setText(timeFormate(getTimeMin(schedual_assistant.get(position).getEnd()) - currenttime));
+            textViewTimer.setText(timeFormate(getTimeMin(schedual.get(position).getEnd()) - currenttime));
 
 
 

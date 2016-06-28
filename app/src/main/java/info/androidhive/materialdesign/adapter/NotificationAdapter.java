@@ -53,10 +53,10 @@ public class NotificationAdapter extends BaseAdapter  {
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         if (convertView == null)
             convertView = inflater.inflate(R.layout.notification_item, parent, false);
-        TextView title = (TextView) convertView.findViewById(R.id.Doctor_name);
-        TextView Sub = (TextView) convertView.findViewById(R.id.time);
-        TextView des = (TextView) convertView.findViewById(R.id.Description25);
-        TextView doctor = (TextView) convertView.findViewById(R.id.subject_gadwal);
+        TextView title = (TextView) convertView.findViewById(R.id.titleNotificationStud);
+        TextView Sub = (TextView) convertView.findViewById(R.id.subjectStud);
+        TextView des = (TextView) convertView.findViewById(R.id.DescriptionStud);
+        TextView doctor = (TextView) convertView.findViewById(R.id.Doctor_name);
         TextView link = (TextView) convertView.findViewById(R.id.link);
         ImageView imageView = (ImageView) convertView.findViewById(R.id.messageIcon);
         m = Items.get(position);

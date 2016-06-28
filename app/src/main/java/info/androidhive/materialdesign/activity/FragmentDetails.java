@@ -49,8 +49,6 @@ public class FragmentDetails extends Fragment {
     @InjectView(R.id.section) TextView section;
 
 
-    @InjectView(R.id.imageViewDetailsBackground)
-    ImageView background;
 
     Communicator communicator;
     private Schedule assistant;
@@ -118,7 +116,6 @@ public class FragmentDetails extends Fragment {
 
     public void setLayout(Schedule assistant) {
         this.assistant = assistant;
-        Glide.with(getActivity()).load(R.drawable.fci).into(background);
         textViewGroup.setText(assistant.getGroup());
         textViewYear.setText(assistant.getYear() + "");
         textViewSubject.setText(assistant.getSubject());

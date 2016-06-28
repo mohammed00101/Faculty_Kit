@@ -48,7 +48,7 @@ public class Activity_DateFragment extends Fragment implements View.OnClickListe
     @Override
     public void onClick(View view) {
         Date d = getDateFromDatePicker(datePicker);
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("Date", Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("date", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("chosenDay",(String) DateFormat.format("EEEE", d));
         editor.commit();

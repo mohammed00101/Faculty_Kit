@@ -8,23 +8,25 @@ import java.io.Serializable;
 public class Schedule implements Serializable {
 
     public static final String assistant_key = "assist";
-    private String day     ;
-    private String doctor  ;
-    private String subject ;
-    private String place   ;
-    private int     year    ;
-    private String group   ;
-    private double  begin   ;
-    private double  end     ;
-    private String section =""  ;
+    private String day;
+    private String name;
+    private String doctor;
+    private String subject;
+    private String place;
+    private int year;
+    private String group;
+    private double begin;
+    private double end;
+    private String section="";
 
 
-
-    public Schedule(){
-
+    public Schedule() {
 
 
+    }
 
+    public String getName() {
+        return name;
     }
 
     public String getDay() {
@@ -32,7 +34,9 @@ public class Schedule implements Serializable {
     }
 
     public String getDoctor() {
-        return doctor;
+        if (name == null || name.length() == 0)
+            return doctor;
+        return name;
     }
 
     public String getSubject() {

@@ -17,7 +17,6 @@ public class DoctorOrAssistant {
         SharedPreferences sharedPreferences = context.getSharedPreferences("checkType", Context.MODE_PRIVATE);
 
         String type = sharedPreferences.getString("type", "");
-        Toast.makeText(context, "type>>" + type, Toast.LENGTH_SHORT).show();
         if (type.equals("doctor"))
             return true;
         return false;

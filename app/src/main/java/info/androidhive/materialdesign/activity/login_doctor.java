@@ -22,6 +22,8 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 
+import java.util.concurrent.ExecutionException;
+
 import info.androidhive.materialdesign.R;
 
 public class login_doctor extends AppCompatActivity {
@@ -34,14 +36,13 @@ public class login_doctor extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_doctor);
-
         if (checkUser()) {
 
             Intent intent = new Intent(login_doctor.this,ScheduleActivity.class);
             startActivity(intent);
         } else {
             Firebase.setAndroidContext(this);
-            firebase = new Firebase("https://torrid-torch-3608.firebaseio.com/");
+            firebase = new Firebase("https://fci-kit.firebaseio.com/");
             signuptextview = (TextView) findViewById(R.id.signUpText);
             login = (Button) findViewById(R.id.loginActivityButton);
             username = (EditText) findViewById(R.id.usernameLogin);
@@ -50,7 +51,8 @@ public class login_doctor extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                        Intent i = new Intent(login_doctor.this, ProfessorFragment.class);
-                        startActivity(i);
+                    //i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(i);
                 }
             });
             login.setOnClickListener(new View.OnClickListener() {
@@ -69,10 +71,8 @@ public class login_doctor extends AppCompatActivity {
         String savedPassword = sharePrefernces.getString("password", "defaultpassword");
         String savedType = sharePrefernces.getString("typeDoctor", "defaulttype");
         if ((!savedName.equals("defaultname")) && (!savedPassword.equals("defaultusername"))) {
-            Log.v("ss", "yes");
             return true;
         }
-        Log.v("ss", "Noo");
         return false;
     }
 
@@ -94,6 +94,17 @@ public class login_doctor extends AppCompatActivity {
                         editor.putString("typeDoctor", doctorData.getType());
                         editor.commit();
 
+
+                        try {
+                            if(!(new Utils.CheckForInternet(login_doctor.this).execute().get())){
+                                Toast.makeText(login_doctor.this, "there is no connection", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        } catch (ExecutionException e) {
+                            e.printStackTrace();
+                        }
                         Intent intent = new Intent(login_doctor.this,ScheduleActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent);

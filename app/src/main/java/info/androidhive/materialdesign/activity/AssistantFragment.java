@@ -34,7 +34,7 @@ public class AssistantFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_professor, container, false);
         ButterKnife.inject(this, rootView);
-        final Firebase firebase = new Firebase("https://softwareengineerpro.firebaseio.com/");
+        final Firebase firebase = new Firebase("https://fci-kit.firebaseio.com/");
 
         AuthicatCode.setOnClickListener(new View.OnClickListener() {
             @Override
